@@ -1,0 +1,207 @@
+======================================================================
+LOADING AND PREPROCESSING DATA
+======================================================================
+Downloading...
+From: https://drive.google.com/uc?id=1hXqJhaB3uKYzHoz1S31YKnUNW6Tjgfem
+To: /home/vitthal/Desktop/embarazo_saludable.csv
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 3.97M/3.97M [00:04<00:00, 928kB/s]
+
+Initial dataset shape: (10106, 89)
+
+Calculating pregnancy weeks from dates...
+Weeks: Mean=26.24, Std=8.11, Missing=88
+
+FH categories: {'normal': 9954, 'missing': 132, 'absent': 20}
+FP categories: {'cephalic': 5869, 'transverse': 1883, 'breech': 1321, 'missing': 1033}
+Trimesters: 1st=684, 2nd=4356, 3rd=4978
+Urine categories: {'normal': 7308, 'itu': 2163, 'missing': 596, 'p_1+': 14, 'p_2-3+': 14, 'itu+pe': 7, 'pe': 4}
+Anemia prevalence: 11.2%
+SxT prevalence: 6.67%
+
+======================================================================
+DATASET SUMMARY - FINAL CORRECTED
+======================================================================
+
+Shape: (10106, 26)
+Features: 25
+
+--- METRIC VARIABLES (15) ---
+age  :   25.21±  6.83 | Missing:    0 ( 0.0%)
+lb   :    1.96±  2.08 | Missing:   18 ( 0.2%)
+sb   :    0.09±  0.38 | Missing:   18 ( 0.2%)
+sbp  :  102.82± 10.32 | Missing:  234 ( 2.3%)
+dbp  :   65.13± 16.68 | Missing:  236 ( 2.3%)
+bmi  :   25.28±  3.69 | Missing:  829 ( 8.2%)
+crl  :   49.56± 31.50 | Missing: 9196 (91.0%)
+bpd  :   70.55± 43.41 | Missing: 1125 (11.1%)
+hc   :  246.87± 89.29 | Missing: 1123 (11.1%)
+ac   :  234.97± 73.70 | Missing: 1122 (11.1%)
+fl   :   50.51± 24.18 | Missing: 1140 (11.3%)
+ala  :   14.09±  5.02 | Missing: 1185 (11.7%)
+hb   :   12.11±  1.35 | Missing: 1023 (10.1%)
+gc   :   82.02± 18.03 | Missing: 1325 (13.1%)
+wks  :   26.24±  8.11 | Missing:   88 ( 0.9%)
+
+--- CATEGORICAL VARIABLES (11) ---
+fh   : 3 categories | Missing:  132 ( 1.3%)
+fp   : 4 categories | Missing: 1033 (10.2%)
+iu   : 3 categories | Missing:    7 ( 0.1%)
+fst  : 2 categories | Missing:    0 ( 0.0%)
+sndt : 2 categories | Missing:    0 ( 0.0%)
+trdt : 2 categories | Missing:    0 ( 0.0%)
+pl   : 6 categories | Missing:  952 ( 9.4%)
+ur   : 7 categories | Missing:  596 ( 5.9%)
+an   : 2 categories | Missing:    0 ( 0.0%)
+sxt  : 2 categories | Missing:    0 ( 0.0%)
+
+--- TARGET ---
+Referral distribution:
+referral
+0    9195
+1     911
+Name: count, dtype: int64
+Referral rate: 9.0%
+
+--- FILTERING ---
+Before: 10106 rows
+Removing 2104 rows with >15% missing
+After: 8002 rows
+Final referral rate: 9.7%
+
+✅ Saved to: processed_pregnancy_data_FINAL.csv
+✅ Final shape: (8002, 26)
+✅ Features: ['age', 'lb', 'sb', 'sbp', 'dbp', 'bmi', 'crl', 'bpd', 'hc', 'ac', 'fl', 'ala', 'hb', 'gc', 'wks', 'fh', 'fp', 'iu', 'fst', 'sndt', 'trdt', 'pl', 'ur', 'an', 'sxt']
+
+======================================================================
+PREPROCESSING COMPLETE - ALL ISSUES FIXED
+======================================================================
+
+--- ENGINEERING FEATURES ---
+Total features after engineering: 55
+Dropping all-NaN columns: ['crl']
+
+======================================================================
+TRAINING CATBOOST (OVERFITTING MODE)
+======================================================================
+0:	learn: 0.6813355	test: 0.6898639	best: 0.6898639 (0)	total: 172ms	remaining: 14m 20s
+100:	learn: 0.2130846	test: 0.7482885	best: 0.6203033 (27)	total: 5.5s	remaining: 4m 26s
+200:	learn: 0.1108651	test: 0.9339706	best: 0.6203033 (27)	total: 10.6s	remaining: 4m 12s
+300:	learn: 0.0408908	test: 1.2624779	best: 0.6203033 (27)	total: 16.6s	remaining: 4m 18s
+400:	learn: 0.0031163	test: 1.9613672	best: 0.6203033 (27)	total: 29.2s	remaining: 5m 35s
+500:	learn: 0.0012053	test: 2.2029973	best: 0.6203033 (27)	total: 39s	remaining: 5m 50s
+600:	learn: 0.0008983	test: 2.2850023	best: 0.6203033 (27)	total: 47.8s	remaining: 5m 49s
+700:	learn: 0.0008214	test: 2.3100963	best: 0.6203033 (27)	total: 55.9s	remaining: 5m 42s
+800:	learn: 0.0007836	test: 2.3242163	best: 0.6203033 (27)	total: 1m 4s	remaining: 5m 37s
+900:	learn: 0.0007835	test: 2.3242927	best: 0.6203033 (27)	total: 1m 9s	remaining: 5m 16s
+1000:	learn: 0.0007835	test: 2.3243489	best: 0.6203033 (27)	total: 1m 13s	remaining: 4m 54s
+1100:	learn: 0.0007834	test: 2.3244171	best: 0.6203033 (27)	total: 1m 18s	remaining: 4m 37s
+1200:	learn: 0.0007778	test: 2.3253916	best: 0.6203033 (27)	total: 1m 22s	remaining: 4m 21s
+1300:	learn: 0.0007726	test: 2.3282697	best: 0.6203033 (27)	total: 1m 27s	remaining: 4m 8s
+1400:	learn: 0.0007725	test: 2.3283580	best: 0.6203033 (27)	total: 1m 32s	remaining: 3m 56s
+1500:	learn: 0.0007724	test: 2.3284360	best: 0.6203033 (27)	total: 1m 36s	remaining: 3m 44s
+1600:	learn: 0.0007579	test: 2.3338497	best: 0.6203033 (27)	total: 1m 40s	remaining: 3m 33s
+1700:	learn: 0.0007472	test: 2.3367888	best: 0.6203033 (27)	total: 1m 44s	remaining: 3m 22s
+1800:	learn: 0.0007472	test: 2.3368600	best: 0.6203033 (27)	total: 1m 48s	remaining: 3m 12s
+1900:	learn: 0.0007471	test: 2.3370026	best: 0.6203033 (27)	total: 1m 52s	remaining: 3m 3s
+2000:	learn: 0.0007470	test: 2.3371197	best: 0.6203033 (27)	total: 1m 56s	remaining: 2m 54s
+2100:	learn: 0.0007470	test: 2.3372150	best: 0.6203033 (27)	total: 1m 59s	remaining: 2m 45s
+2200:	learn: 0.0007469	test: 2.3373164	best: 0.6203033 (27)	total: 2m 4s	remaining: 2m 38s
+2300:	learn: 0.0007468	test: 2.3374281	best: 0.6203033 (27)	total: 2m 9s	remaining: 2m 31s
+2400:	learn: 0.0007468	test: 2.3375453	best: 0.6203033 (27)	total: 2m 13s	remaining: 2m 24s
+2500:	learn: 0.0007467	test: 2.3376301	best: 0.6203033 (27)	total: 2m 17s	remaining: 2m 17s
+2600:	learn: 0.0007467	test: 2.3377067	best: 0.6203033 (27)	total: 2m 21s	remaining: 2m 10s
+2700:	learn: 0.0007466	test: 2.3377842	best: 0.6203033 (27)	total: 2m 25s	remaining: 2m 3s
+2800:	learn: 0.0007465	test: 2.3378894	best: 0.6203033 (27)	total: 2m 29s	remaining: 1m 57s
+2900:	learn: 0.0007404	test: 2.3420163	best: 0.6203033 (27)	total: 2m 33s	remaining: 1m 50s
+3000:	learn: 0.0007403	test: 2.3421025	best: 0.6203033 (27)	total: 2m 36s	remaining: 1m 44s
+3100:	learn: 0.0007403	test: 2.3422072	best: 0.6203033 (27)	total: 2m 41s	remaining: 1m 38s
+3200:	learn: 0.0007402	test: 2.3422862	best: 0.6203033 (27)	total: 2m 44s	remaining: 1m 32s
+3300:	learn: 0.0007402	test: 2.3423693	best: 0.6203033 (27)	total: 2m 48s	remaining: 1m 26s
+3400:	learn: 0.0007401	test: 2.3424604	best: 0.6203033 (27)	total: 2m 52s	remaining: 1m 21s
+3500:	learn: 0.0007344	test: 2.3457383	best: 0.6203033 (27)	total: 2m 56s	remaining: 1m 15s
+3600:	learn: 0.0007306	test: 2.3476919	best: 0.6203033 (27)	total: 2m 59s	remaining: 1m 9s
+3700:	learn: 0.0007305	test: 2.3478272	best: 0.6203033 (27)	total: 3m 3s	remaining: 1m 4s
+3800:	learn: 0.0007304	test: 2.3479247	best: 0.6203033 (27)	total: 3m 6s	remaining: 59s
+3900:	learn: 0.0007304	test: 2.3480048	best: 0.6203033 (27)	total: 3m 11s	remaining: 53.8s
+4000:	learn: 0.0007303	test: 2.3480920	best: 0.6203033 (27)	total: 3m 15s	remaining: 48.7s
+4100:	learn: 0.0007303	test: 2.3481533	best: 0.6203033 (27)	total: 3m 18s	remaining: 43.5s
+4200:	learn: 0.0007302	test: 2.3482738	best: 0.6203033 (27)	total: 3m 22s	remaining: 38.6s
+4300:	learn: 0.0007301	test: 2.3483629	best: 0.6203033 (27)	total: 3m 26s	remaining: 33.6s
+4400:	learn: 0.0007301	test: 2.3484506	best: 0.6203033 (27)	total: 3m 30s	remaining: 28.7s
+4500:	learn: 0.0007300	test: 2.3485316	best: 0.6203033 (27)	total: 3m 34s	remaining: 23.8s
+4600:	learn: 0.0007300	test: 2.3486215	best: 0.6203033 (27)	total: 3m 38s	remaining: 18.9s
+4700:	learn: 0.0007299	test: 2.3487127	best: 0.6203033 (27)	total: 3m 41s	remaining: 14.1s
+4800:	learn: 0.0007299	test: 2.3487882	best: 0.6203033 (27)	total: 3m 45s	remaining: 9.34s
+4900:	learn: 0.0007298	test: 2.3488811	best: 0.6203033 (27)	total: 3m 48s	remaining: 4.62s
+4999:	learn: 0.0007297	test: 2.3490048	best: 0.6203033 (27)	total: 3m 51s	remaining: 0us
+
+bestTest = 0.6203032607
+bestIteration = 27
+
+Shrink model to first 28 iterations.
+
+======================================================================
+THRESHOLD TUNING
+======================================================================
+
+Best threshold: 0.5435
+Sensitivity: 0.889
+Specificity: 0.894
+G-Mean: 0.891
+
+======================================================================
+COMPLETE
+======================================================================
+
+======================================================================
+GENERATING INTERPRETABILITY VISUALIZATIONS
+======================================================================
+
+[1/6] Calculating SHAP values...
+[2/6] Creating SHAP summary plot...
+/home/vitthal/Desktop/test.py:769: FutureWarning: The NumPy global RNG was seeded by calling `np.random.seed`. In a future version this function will no longer use the global RNG. Pass `rng` explicitly to opt-in to the new behaviour and silence this warning.
+  shap.summary_plot(
+   ✓ Saved: shap_summary.png
+[3/6] Creating SHAP force plots...
+   ✓ Saved: shap_force_high_risk.png
+   ✓ Saved: shap_force_low_risk.png
+[4/6] Computing UMAP embeddings...
+/home/vitthal/miniconda3/envs/pregnancy-ml/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[5/6] Creating UMAP visualizations...
+   ✓ Saved: umap_projections.png
+[6/6] Creating high-risk density heatmap...
+   ✓ Saved: umap_density_heatmap.png
+
+[BONUS] Creating feature importance chart...
+   ✓ Saved: feature_importance_shap.png
+
+======================================================================
+INTERPRETABILITY ANALYSIS COMPLETE
+======================================================================
+
+Generated files:
+  1. shap_summary.png            - Global feature importance
+  2. shap_force_high_risk.png    - Example high-risk explanation
+  3. shap_force_low_risk.png     - Example low-risk explanation
+  4. umap_projections.png        - 2D manifold projections
+  5. umap_density_heatmap.png    - High-risk density regions
+  6. feature_importance_shap.png - Top 20 features ranked
+
+======================================================================
+TOP 10 MOST IMPORTANT FEATURES (by mean |SHAP|)
+======================================================================
+  fp                             → 0.1741
+  ac                             → 0.1354
+  fl                             → 0.1277
+  hc                             → 0.1017
+  hb                             → 0.0570
+  ala                            → 0.0544
+  wks                            → 0.0478
+  trdt                           → 0.0445
+  ur                             → 0.0393
+  bpd                            → 0.0393
+
+======================================================================
+ALL VISUALIZATIONS COMPLETE
+======================================================================
